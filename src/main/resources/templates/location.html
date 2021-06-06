@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Add location</title>
+</head>
+<body>
+
+<div align="center">
+    <h1>Add Location</h1>
+    <br />
+    <form action="#" th:action="@{/web/location/add}" th:object="${location}"
+          method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Address:</td>
+                <td><input type="text" th:field="*{address}" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Save</button> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>

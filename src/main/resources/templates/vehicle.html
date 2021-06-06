@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
+    <title>Add Vehicle</title>
+</head>
+<body>
+
+<div align="center">
+    <h1>Add Vehicle</h1>
+    <br />
+    <form action="#" th:action="@{/web/vehicle/add}" th:object="${vehicle}"
+          method="post">
+
+        <table border="0" cellpadding="10">
+            <tr>
+                <td>Vehicle Name:</td>
+                <td><input type="text" th:field="*{name}" /></td>
+            </tr>
+
+            <tr>
+                <td> Vehicle Number:</td>
+                <td><input type="text" th:field="*{registeredNumber}" /></td>
+            </tr>
+            <tr>
+                <td colspan="2"><button type="submit">Save</button> </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</body>
+</html>
