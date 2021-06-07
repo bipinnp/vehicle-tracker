@@ -3,6 +3,10 @@ package com.bipin.vehicle.tracker.controller;
 import com.bipin.vehicle.tracker.entity.Camera;
 import com.bipin.vehicle.tracker.entity.Location;
 import com.bipin.vehicle.tracker.entity.Vehicle;
+import com.bipin.vehicle.tracker.entity.VehicleMovement;
+import com.bipin.vehicle.tracker.repository.CameraRepository;
+import com.bipin.vehicle.tracker.repository.LocationRepository;
+import com.bipin.vehicle.tracker.repository.VehicleRepository;
 import com.bipin.vehicle.tracker.service.CameraService;
 import com.bipin.vehicle.tracker.service.LocationService;
 import com.bipin.vehicle.tracker.service.VehicleService;
@@ -11,8 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Vector;
+import java.util.stream.Collectors;
+
 @Controller
-@RequestMapping("/web")
+@RequestMapping({"/web" })
 public class WebController {
 
     @Autowired
@@ -22,6 +31,15 @@ public class WebController {
     @Autowired
     private VehicleService vehicleService;
 
+    @Autowired
+    private VehicleRepository vehicleRepository;
+
+    @Autowired
+    private LocationRepository locationRepository;
+
+    @Autowired
+    private CameraRepository cameraRepository;
+
     @GetMapping("/login")
     public String getLoginPage() {
         return "login";
@@ -29,13 +47,16 @@ public class WebController {
 
     @PostMapping("/home")
     public String getHome(@RequestParam("username") String username,
-                       @RequestParam("password") String password){
+                       @RequestParam("password") String password, Model model){
+
+        List<Location> locationList = locationService.findAll();
+        model.addAttribute("locations", locationList);
         if (username.equals("admin") && password.equals("admin"))
         {
             return "home";
         }
         else
-            return "login";
+            return "home";
     }
     @GetMapping("/location")
     public String getLocationPage(Model model) {
@@ -58,20 +79,42 @@ public class WebController {
         return "vehicle";
     }
 
+    @GetMapping
+    public String getVehicleMovementPage(Model model) {
+        List<String> vehicleRegNums = vehicleService.findAll().stream()
+                .map(Vehicle::getRegisteredNumber).collect(Collectors.toList());
+        List<String> locationAddresses = locationService.findAll().stream()
+                .map(Location::getAddress).collect(Collectors.toList());
+        List<String> locationCameras = cameraService.findAll().stream()
+                .map(Camera::getName).collect(Collectors.toList());
+
+        model.addAttribute("vehicles", vehicleRegNums);
+        model.addAttribute("locations", locationAddresses);
+        model.addAttribute("cameras", locationCameras);
+        model.addAttribute("movement", new VehicleMovement());
+        return "movement";
+    }
+
     @PostMapping("/camera/add")
     public String saveCamera(@ModelAttribute("camera") Camera camera) {
         cameraService.create(camera);
-        return "redirect:/home";
+        return "home";
     }
     @PostMapping("/location/add")
     public String saveLocation(@ModelAttribute("location") Location location) {
         locationService.create(location);
-        return "redirect:/home";
+        return "home";
     }
 
     @PostMapping("/vehicle/add")
     public String saveVehicle(@ModelAttribute("vehicle") Vehicle vehicle) {
         vehicleService.create(vehicle);
-        return "redirect:/home";
+        return "home";
+    }
+
+    @PostMapping("/movement/add")
+    public String saveMovement(VehicleMovement vehicleMovement, Model model) {
+        model.addAttribute("movement", vehicleMovement);
+        return "movement-success";
     }
 }

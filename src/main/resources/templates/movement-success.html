@@ -1,21 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Vehicle Tracker</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="UTF-8">
+
+</head>
+<body>
+
+</body>
+</html>
+
+<!DOCTYPE HTML>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Movement Success</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <!--<link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>-->
 </head>
 <body>
 
-<div class="jumbotron text-center">
-    <h1>VEHICLE TRACKING SYSTEM</h1>
-    <h2>Welcome!</h2>
-</div>
-
+<!-- Navigation -->
 <div class="container">
     <div class="row">
         <div class="col-sm-4">
@@ -32,7 +39,7 @@
         </div>
 
         <div class="col-sm-4">
-            <a class="" href="/web/movement"><h3>Add Vehicle Movement</h3></a>
+            <a class="" href="/web/vehicle/movement"><h3>Add Vehicle Movement</h3></a>
             <p>Add vehicles movements for tracking at various locations.</p>
         </div>
 
@@ -41,6 +48,16 @@
             <p>Generate report of vehicle tracking in PDF form.</p>
         </div>
     </div>
+</div>
+
+<div class="container">
+    <h3>Saved Vehicle Movement Details</h3>
+    <div class="mt-5">Vehicle: <strong th:text="${movement.vehicle}"></strong></div>
+    <div class="mt-5">Location: <strong th:text="${movement.location}"></strong></div>
+    <div class="mt-5">Camera: <strong th:text="${movement.camera}"></strong></div>
+    <div class="mt-5">Camera: <strong th:text="${movement.datetime}"></strong></div>
+
+    <a th:href="@{/web/home}" class="btn btn-primary mt-5">Back to Home Page</a>
 </div>
 
 </body>

@@ -3,16 +3,51 @@
 <head>
     <meta charset="UTF-8" xmlns:th="http://www.thymeleaf.org">
     <title>Add camera</title>
+
+ <!--   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    &lt;!&ndash; needs for bootstrap-select &ndash;&gt;
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.js"></script>
+
+    &lt;!&ndash; bootstrap-select additional library &ndash;&gt;
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.17/css/bootstrap-select.min.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.17/js/bootstrap-select.min.js"></script>-->
+
+    <link th:rel="stylesheet" th:href="@{assets/bootstrap-select-1.13.9/dist/css/bootstrap-select.css}"/>
+    <link th:rel="stylesheet" th:href="@{webjars/bootstrap/4.0.0-2/css/bootstrap.min.css} "/>
+
+
 </head>
 <body>
 
-<div align="center">
+<div class="container">
     <h1>Add Camera</h1>
     <br />
     <form action="#" th:action="@{/web/camera/add}" th:object="${camera}"
           method="post">
 
-        <table border="0" cellpadding="10">
+        <div class="form-group">
+            <label for="camera-name">Captured Date Time:</label>
+            <input type="text" class="form-control" th:field="*{name}" id="camera-name" placeholder="Enter camera name" name="camera-name">
+        </div>
+
+        <div class="form-group">
+            <label for="camera-location">Location address:</label>
+                 <select class="form-control selectpicker" th:field="*{location}" id="camera-location">
+                <option value="">Select camera install location</option>
+                <option th:each="location : ${locations}"
+                        th:value="${location.id}"
+                        th:text="${location.address}">
+                </option>
+            </select>
+        </div>
+
+<!--        <table border="0" cellpadding="10">
             <tr>
                 <td>Camera Name:</td>
                 <td><input type="text" th:field="*{name}" /></td>
@@ -25,8 +60,13 @@
             <tr>
                 <td colspan="2"><button type="submit">Save</button> </td>
             </tr>
-        </table>
+        </table>-->
     </form>
+
+    <script th:src="@{/webjars/jquery/jquery.min.js}"></script>
+    <script th:src="@{/webjars/popper.js/umd/popper.min.js}"></script>
+    <script th:src="@{/webjars/bootstrap/js/bootstrap.min.js}"></script>
+    <script th:src="@{assets/bootstrap-select-1.13.9/dist/js/bootstrap-select.js}"></script>
 </div>
 </body>
 </html>
