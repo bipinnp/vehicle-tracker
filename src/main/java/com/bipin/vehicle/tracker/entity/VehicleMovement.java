@@ -20,11 +20,12 @@ public class VehicleMovement {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotEmpty(message = "Vehicle's name cannot be empty.")
+  /*  @NotEmpty(message = "Vehicle's name cannot be empty.")
     @Size(min = 5, max = 25)
-    private String vehicleName;
+    private String vehicleName;*/
 
     @NotEmpty(message = "Vehicle's registered number cannot be empty.")
+    @Size(min = 5, max = 25)
     private String vehicleRegNumber;
 
     @NotEmpty(message = "Vehicle's tracked location cannot be empty.")

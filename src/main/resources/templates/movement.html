@@ -1,24 +1,47 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
+    <meta charset="UTF-8" >
     <title>Add Movement</title>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
 </head>
 <body>
 
 <div class="container">
     <h2>Add vehicle movement</h2>
-    <form action="#" th:action="@{web/movement/add}" th:object="${movement}" method="post" >
+    <form th:action="@{/web/movement/add}" th:object="${movement}" method="post" >
+        <div class="form-group">
+            <label for="vehicle-reg-no">Registration Number:</label>
+            <!--<input type="text" class="form-control" id="vehicle-reg-no" placeholder="Enter vehicle registration number" name="vehicle-reg-no">-->
+            <select class="form-control" th:field="*{vehicleRegNumber}" id="vehicle-reg-no">
+                <option value="">Select vehicle registration number</option>
+                <option th:each="vehicle : ${vehicles}"
+                        th:value="${vehicle}"
+                        th:text="${vehicle}">
+                </option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label for="vehicle-location">Location Address:</label>
+            <!--<input type="text" class="form-control" id="vehicle-location" placeholder="Enter location address" name="vehicle-location">-->
+            <select class="form-control selectpicker" th:field="*{locationAddress}" id="vehicle-location">
+                <option value="">Select location </option>
+                <option th:each="location : ${locations}"
+                        th:value="${location}"
+                        th:text="${location}"
+                        th:selected="${location}">
+                </option>
+            </select>
+        </div>
+
         <div class="form-group">
             <label for="camera-name">Camera:</label>
             <!--<input type="text" class="form-control" id="camera-name" placeholder="Enter camera name" name="camera-name">-->
-            <select class="form-control selectpicker" th:field="*{camera}" id="camera-name">
+            <select class="form-control" th:field="*{cameraName}" id="camera-name">
                 <option value="">Select camera</option>
                 <option th:each="camera : ${cameras}"
                         th:value="${camera}"
@@ -28,32 +51,8 @@
         </div>
 
         <div class="form-group">
-            <label for="vehicle-reg-no">Registration Number:</label>
-            <!--<input type="text" class="form-control" id="vehicle-reg-no" placeholder="Enter vehicle registration number" name="vehicle-reg-no">-->
-            <select class="form-control selectpicker" th:field="*{vehicle}" id="vehicle-reg-no">
-                <option value="">Select vehicle registration number</option>
-                <option th:each="vehicle : ${vehicles}"
-                        th:value="${vehicle}"
-                        th:text="${vehicle}">
-                </option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label for="vehicle-location">Location Address:</label>
-            <!--<input type="text" class="form-control" id="vehicle-location" placeholder="Enter location address" name="vehicle-location">-->
-            <select class="form-control selectpicker" th:field="*{location}" id="vehicle-location">
-                <option value="">Select camera</option>
-                <option th:each="location : ${locations}"
-                        th:value="${location}"
-                        th:text="${location}"
-                        th:selected="${location}">
-                </option>
-            </select>
-
-        </div>
-        <div class="form-group">
             <label for="captured-date-time">Captured Date Time:</label>
-            <input type="datetime-local" class="form-control" th:field="*{datetime}" id="captured-date-time" placeholder="Enter captured date time" name="captured-date-time">
+            <input type="datetime-local" class="form-control" th:field="*{movementCapturedDateTime}" id="captured-date-time" placeholder="Enter captured date time" name="captured-date-time">
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
@@ -61,12 +60,3 @@
 
 </body>
 </html>
-
-
-
-<!--
-<label for="drink">Drink</label>
-<select id="drink" name="drink">
-    <option th:each="drink : ${drinks}" th:text="${drink.name}"                //drinks are an array of ENUMs here, drink.name are the lowercase equivalent
-    th:value="${drink}" th:selected=${drink==customer.drink}></option> //the customer's last drink will be the default
-</select>-->

@@ -34,7 +34,9 @@ public class CameraDaoImpl implements CameraDao {
     @Override
     @Transactional(rollbackOn = Exception.class)
     public Camera create(Camera camera) {
-        Location location = locationRepository.findById(camera.getLocationId()).orElseThrow(() -> new ResourceNotFoundException("Location", "id", camera.getLocationId()));
+        Long locationId = Long.valueOf(camera.getLocationId());
+        //Location location = locationRepository.findById(camera.getLocationId()).orElseThrow(() -> new ResourceNotFoundException("Location", "id", camera.getLocationId()));
+        Location location = locationRepository.findById(locationId).orElseThrow(() -> new ResourceNotFoundException("Location", "id", locationId));
         camera.setLocation(location);
         return cameraRepository.save(camera);
     }
@@ -42,7 +44,8 @@ public class CameraDaoImpl implements CameraDao {
     @Override
     @Transactional(rollbackOn = Exception.class)
     public Camera update(Camera camera) {
-        Location location = locationRepository.findById(camera.getLocationId()).orElseThrow(() -> new ResourceNotFoundException("Location", "id", camera.getLocationId()));
+        Long locationId = Long.valueOf(camera.getLocationId());
+        Location location = locationRepository.findById(locationId).orElseThrow(() -> new ResourceNotFoundException("Location", "id", locationId));
         Camera camera1 = cameraRepository.findById(camera.getId()).orElseThrow(() -> new ResourceNotFoundException("Camera","id", camera.getId()));
         camera1.setLocation(location);
         camera1.setName(camera.getName());

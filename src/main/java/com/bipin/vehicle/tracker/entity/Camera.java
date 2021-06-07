@@ -20,7 +20,7 @@ public class Camera {
     private String name;
 
     @Transient
-    private Long locationId;
+    private String locationId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JsonIgnore

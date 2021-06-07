@@ -15,9 +15,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Vector;
 import java.util.stream.Collectors;
 
 @Controller
@@ -48,9 +46,6 @@ public class WebController {
     @PostMapping("/home")
     public String getHome(@RequestParam("username") String username,
                        @RequestParam("password") String password, Model model){
-
-        List<Location> locationList = locationService.findAll();
-        model.addAttribute("locations", locationList);
         if (username.equals("admin") && password.equals("admin"))
         {
             return "home";
@@ -66,9 +61,11 @@ public class WebController {
     }
 
     @GetMapping("/camera")
-    public String getCameraPAge(Model model) {
+    public String getCameraPage(Model model) {
         Camera camera = new Camera();
         model.addAttribute("camera", camera);
+        List<Location> locationList = locationService.findAll();
+        model.addAttribute("locations", locationList);
         return "camera";
     }
 
@@ -79,7 +76,7 @@ public class WebController {
         return "vehicle";
     }
 
-    @GetMapping
+    @GetMapping("/movement")
     public String getVehicleMovementPage(Model model) {
         List<String> vehicleRegNums = vehicleService.findAll().stream()
                 .map(Vehicle::getRegisteredNumber).collect(Collectors.toList());
@@ -113,7 +110,8 @@ public class WebController {
     }
 
     @PostMapping("/movement/add")
-    public String saveMovement(VehicleMovement vehicleMovement, Model model) {
+    public String saveMovement(@ModelAttribute("movement") VehicleMovement vehicleMovement, Model model) {
+        System.out.println("vcccccc: " + vehicleMovement);
         model.addAttribute("movement", vehicleMovement);
         return "movement-success";
     }
